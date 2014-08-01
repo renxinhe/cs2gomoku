@@ -1,0 +1,25 @@
+/**
+ * @(#)Black.java
+ * Black colored go piece.
+ *
+ * @author Jim Ren
+ * @version 1.00 2012/5/9
+ */
+
+
+public class Black extends Piece
+{
+	 public Black(int num1, int num2)
+    {
+    	super(num1, num2);
+    }
+
+	public String toString()
+	{
+		return "Black" + getLocation();
+	}
+	public int getColor()
+	{
+		return 0;
+	}
+}
