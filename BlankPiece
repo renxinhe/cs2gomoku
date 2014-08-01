@@ -1,0 +1,25 @@
+/**
+ * @(#)BlankPiece.java
+ *
+ *
+ * @author 
+ * @version 1.00 2012/5/16
+ */
+
+
+public class BlankPiece extends Piece
+{
+	 public BlankPiece(int num1, int num2)
+    {
+    	super(num1, num2);
+    }
+
+    public String toString()
+    {
+    	return "Blank" + getLocation();
+    }
+    public int getColor()
+    {
+    	return -1;
+    }
+}
