@@ -1,0 +1,346 @@
+import java.awt.*;
+import java.awt.event.*;
+import java.awt.*;
+import javax.swing.*;
+
+
+
+/**
+ * @(#)Game.java
+ * Everything else.
+ *
+ * @author Alexander Aitken, Jim Ren, Johnathan Haj-Elias
+ * @version 1.00 2012/5/11
+ */
+ 
+ 
+ 
+ /*WHITE/BLACK check, player check, int win,  
+  *Constructor: Grid class
+  *Methods: place (piece) -> Check for valid move, checkWin(takes Location), act(calls all methods), MOUSELIESTNEIRFNSEIOFJ
+  *
+  *
+  *
+  *
+  *
+  *
+  *
+  *
+  */
+  
+ public class Game extends JPanel implements MouseListener
+ {
+ 	private final static int WHITE=1;
+ 	private final static int BLACK=0;
+ 	private	final static int SIZE = 43;
+ 	private final static int XINIT = 10;
+ 	private final static int YINIT = 5;
+ 	private int mouseX=0;
+ 	private int mouseY=0;
+ 	private int whoseTurn; //Default black=0, white=1
+ 	private int win; //-1=no winner, 0=black, 1=white
+ 	private Grid grid;
+ 	
+ 	
+ 	//CONSTRUCTOR------------------------------------------
+ 	public Game()
+ 	{
+ 		whoseTurn=BLACK;
+ 		win=-1;
+ 		grid=new Grid();
+ 		this.addMouseListener(this);
+ 		
+ 		//DRAW FRAME (BOARD)
+ 		JFrame frame = new JFrame("Gomoku / Wu Zi Qi / 5-in-a-row");
+ 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
+ 		frame.setSize(1200, 870);
+		setSize(1200, 870);
+		setFocusable(true);
+ 		frame.add(this);
+ 		frame.setBackground(new Color(195,163,104)); //Beige 166 123 91
+ 		frame.setVisible(true);
+		setVisible(true);
+		frame.setResizable(false);
+		
+		//DRAW FRAME (PIECES OVER BOARD)
+		/*JFrame pokeframe = new JFrame("Gomoku / Wu Zi Qi / 5-in-a-row");
+ 		pokeframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
+ 		pokeframe.setSize(1200, 870);
+		setSize(1200, 870);
+		setFocusable(true);
+ 		pokeframe.add(this);
+ 		pokeframe.setBackground(new Color(195,163,104)); //Beige 166 123 91
+ 		pokeframe.setVisible(true);
+		setVisible(true);
+		pokeframe.setResizable(false);*/
+
+ 	}
+ 	
+ 	
+ 	//PLACEPIECE-----------------------------------------
+ 	private void placePiece(Location loc)
+ 	{
+ 		if(valid(loc))
+ 		{
+ 			if(whoseTurn==BLACK)
+ 			{
+ 				grid.place(loc, new Black(loc.getX(),loc.getY()));
+ 			//	whoseTurn=WHITE;	
+ 			}
+ 			if(whoseTurn==WHITE)
+ 			{
+ 				grid.place(loc, new White(loc.getX(),loc.getY()));
+ 			//	whoseTurn=BLACK;
+ 			}
+ 		}
+ 	}
+ 	
+ 	
+ 	//VALID---------------------------------------------
+ 	private boolean valid(Location loc)
+ 	{
+ 		if(loc.inBounds())
+ 			if(grid.get(loc).getColor()==-1)
+ 				return true;
+ 		return false;
+ 	}
+ 	
+ 	
+ 	//CHECKWIN------------------------------------------
+ 	private void checkWin(Location loc)
+ 	{
+ 		int nsCount=0;
+ 		int ewCount=0;
+ 		int nwseCount=0;
+ 		int neswCount=0;
+ 		boolean isColor=true;
+ 		Location temploc = loc;
+ 		
+ 		//NORTH
+ 		isColor=true;
+ 		while(isColor)
+ 		{
+ 			Location newloc = temploc.getAdjacentLocation(Location.N);
+ 			if(newloc.inBounds() && grid.get(newloc).getColor()==whoseTurn)
+ 				nsCount++;
+ 			else
+ 				isColor=false;
+ 			temploc=newloc;
+ 		}
+ 		
+ 		//SOUTH
+ 		temploc=loc;
+ 			isColor=true;
+ 		while(isColor)
+ 		{
+ 			Location newloc = temploc.getAdjacentLocation(Location.S);
+ 			if(newloc.inBounds() && grid.get(newloc).getColor()==whoseTurn)
+ 				nsCount++;
+ 			else
+ 				isColor=false;
+ 			temploc=newloc;
+ 		}
+ 		
+ 		
+ 		//EAST
+ 		temploc=loc;
+ 			isColor=true;
+ 		while(isColor)
+ 		{
+ 			Location newloc = temploc.getAdjacentLocation(Location.E);
+ 			if(newloc.inBounds() && grid.get(newloc).getColor()==whoseTurn)
+ 				ewCount++;
+ 			else
+ 				isColor=false;
+ 			temploc=newloc;
+ 		}
+ 
+ 		
+ 		//WEST
+ 		temploc=loc;
+ 			isColor=true;
+ 		while(isColor)
+ 		{
+ 			Location newloc = temploc.getAdjacentLocation(Location.W);
+ 			if(newloc.inBounds() && grid.get(newloc).getColor()==whoseTurn)
+ 				ewCount++;
+ 			else
+ 				isColor=false;
+ 			temploc=newloc;
+ 		}
+ 		
+ 		//NORTHWEST
+ 		temploc=loc;
+ 			isColor=true;
+ 		while(isColor)
+ 		{
+ 			Location newloc = temploc.getAdjacentLocation(Location.NW);
+ 			if(newloc.inBounds() && grid.get(newloc).getColor()==whoseTurn)
+ 				nwseCount++;
+ 			else
+ 				isColor=false;
+ 			temploc=newloc;
+ 		}
+ 		
+ 		
+ 		
+ 		
+ 		//SOUTHEAST
+ 		temploc=loc;
+ 			isColor=true;
+ 		while(isColor)
+ 		{
+ 			Location newloc = temploc.getAdjacentLocation(Location.SE);
+ 			if(newloc.inBounds() && grid.get(newloc).getColor()==whoseTurn)
+ 				nwseCount++;
+ 			else
+ 				isColor=false;
+ 			temploc=newloc;
+ 		}
+ 		
+ 		
+ 		//NORTHEAST
+ 		temploc=loc;
+ 			isColor=true;
+ 		while(isColor)
+ 		{
+ 			Location newloc = temploc.getAdjacentLocation(Location.NE);
+ 			if(newloc.inBounds() && grid.get(newloc).getColor()==whoseTurn)
+ 				neswCount++;
+ 			else
+ 				isColor=false;
+ 			temploc=newloc;
+ 		}
+ 		
+ 		
+ 		//SOUTHWEST
+ 		temploc=loc;
+ 			isColor=true;
+ 		while(isColor)
+ 		{
+ 			Location newloc = temploc.getAdjacentLocation(Location.SW);
+ 			if(newloc.inBounds() && grid.get(newloc).getColor()==whoseTurn)
+ 				neswCount++;
+ 			else
+ 				isColor=false;
+ 			temploc=newloc;
+ 		}
+ 		
+ 		if(nsCount>=5 || ewCount>=5 || nwseCount>=5 || neswCount>=5)
+ 			win=whoseTurn;
+ 		else
+ 			win=-1;
+ 		
+ 		
+ 	}
+ 	
+ 	
+ 	
+ 	//ACT-------------------------------------------------
+ 	public void act()
+ 	{
+ 		//take in click, correspond to piece array, traverse array and draw pieces on board, check win, if win break go to win/lose method,
+ 		//else change player and re-act
+ 		/*MouseEvent e = new MouseEvent();
+ 		mousePressed(e.MOUSE_PRESSED);
+ 		System.out.println("("+mouseX+","+mouseY+")");*/
+ 		
+  	}
+ 	
+ 	
+ 	//PAINTCOMPONENT--------------------------------------
+ 	public void paintComponent(Graphics g)
+	{
+		g.setColor(new Color(195,163,104));
+		g.fillRect(0, 0, getWidth(), getHeight());
+		Graphics2D ggrid = (Graphics2D) g;
+
+	
+		int xval = XINIT;
+		int yval = YINIT;
+		
+		for(int x=0; x<20;x++)
+		{
+			ggrid.setColor(Color.BLACK);
+			ggrid.drawLine(xval,yval,xval,yval+(19)*SIZE);
+		
+			
+			
+			xval+=SIZE;
+		}
+		xval=XINIT;
+		for(int y=0; y<20; y++)
+		{
+			
+				ggrid.drawLine(xval,yval,xval+(19)*SIZE, yval);
+				yval+=SIZE;
+		}
+	}
+	
+	//MOUSEPRESSED---------------------------------------
+	public void mousePressed(MouseEvent e)
+	{
+		
+	}
+	
+	
+	//WINGAME-------------------------------------------
+	public void winGame()
+	{
+		System.out.println("YOU WIN");
+	}
+	 
+	 
+	//LOSEGAME------------------------------------------
+	public void loseGame()
+	{
+		System.out.println("YOU ARE A LOSER, GO DIE IN A HOLE");
+	}
+	 
+	//ALTERNATE-----------------------------------------
+	private void altMove()
+	{
+		if(whoseTurn==BLACK)
+			whoseTurn=WHITE;
+		else if(whoseTurn==WHITE)
+			whoseTurn=BLACK;
+	}
+	public void mouseClicked(MouseEvent e) {
+		mouseX= (e.getY()-YINIT)/SIZE;//-0.5;
+		mouseY= (e.getX()-XINIT)/SIZE;//-0.5;
+		
+		//take in click, correspond to piece array, traverse array and draw pieces on board, check win, if win break go to win/lose method,
+ 		//else change player and re-act
+ 		Location mouseLoc = new Location(mouseX, mouseY);
+ 		this.placePiece(mouseLoc);
+ 		//DRAW PIECES, MAN
+ 		
+ 		//Check for victory
+ 		for(int x=0; x<19; x++)
+ 		{for(int y=0; y<19; y++)
+ 			{checkWin(new Location(x, y));
+ 				if(win==BLACK)
+ 					winGame();
+ 				if(win==WHITE)
+ 					loseGame();
+ 			}
+ 		}		
+ 		this.altMove();}
+    public void mouseReleased(MouseEvent e) {}
+    public void mouseEntered(MouseEvent e) {}
+    public void mouseExited(MouseEvent e) {}
+
+	 
+	 
+ 	
+ 	//MAIN METHOD---------------------------------------- 
+ 	public static void main(String args[])
+ 	{
+ 		Game gg = new Game();
+ 		while(true)
+ 			gg.act();
+ 	}
+ 	
+ }
+
+
