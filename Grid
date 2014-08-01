@@ -1,0 +1,55 @@
+import java.awt.*;
+import java.awt.event.*;
+import java.awt.*;
+import javax.swing.*;
+
+
+
+/**
+ * @(#)Grid.java
+ * A Grid class which contains the pieces
+ *
+ * @author Alexander Aitken (w/ Jim Ren, Jonathan Haj-Elias)
+ * @version 1.02 2012/5/9
+ */
+
+
+public class Grid
+{
+	private Piece[][] pgrid;
+	public Grid()
+	{
+		pgrid = new Piece[19][19];
+		for(int i=0; i<19; i++)
+			for(int j=0; j<19; j++)
+				pgrid[i][j] = new BlankPiece(i,j);
+	}
+	
+	public Piece[][] getPieces()
+	{
+		return pgrid;
+	}
+	
+	public Piece get(Location loc)
+	{
+		for(int x=0; x<19; x++)
+			for(int y=0; y<19; y++)
+			{	if(pgrid[x][y].getLocation()==null)
+					return null;
+				if(pgrid[x][y].getLocation().equals(loc))
+					return pgrid[x][y];
+			}
+					
+		return null;
+				
+	}
+	
+	public void place(Location loc, Piece p)
+	{
+		pgrid[loc.getX()][loc.getY()]=p;
+		System.out.println("Piece placed. Type, Location: " + p);
+		
+	}
+
+}
+
