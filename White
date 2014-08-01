@@ -1,0 +1,25 @@
+/**
+ * @(#)White.java
+ * White colored go piece.
+ *
+ * @author Jim Ren
+ * @version 1.00 2012/5/9
+ */
+
+
+public class White extends Piece
+{
+	 public White(int num1, int num2)
+    {
+    	super(num1, num2);
+    }
+
+    public String toString()
+    {
+    	return "White" + getLocation();
+    }
+    public int getColor()
+    {
+    	return 1;
+    }
+}
