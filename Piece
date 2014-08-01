@@ -1,0 +1,51 @@
+/**
+ * @(#)Piece.java
+ * An abstract Piece class that represents go pieces.
+ *
+ * @author Jim Ren
+ * @version 1.00 2012/5/9
+ */
+
+
+abstract public class Piece
+{
+	/**
+	 * Location for Piece
+	 */
+	private Location loc;
+
+	/**
+	 * Default constructor of abstract Piece
+	 */
+    public Piece()
+    {
+    	loc = new Location();
+    }
+
+	/**
+	 * Parameter constructor of abstract Piece.
+	 * @param x and y value of a Location
+	 */
+    public Piece(int num1, int num2)
+    {
+    	loc = new Location(num1, num2);
+    }
+
+
+    public Location getLocation()
+    {
+    	return loc;
+    }
+
+	/**
+	 * Checks if the color of this and piece is the same.
+	 */
+    public boolean equals(Piece piece)
+    {
+    	return this.toString().charAt(0) == piece.toString().charAt(0);
+    }
+
+	abstract public int getColor();
+	
+    abstract public String toString();
+}
