@@ -1,0 +1,77 @@
+/**
+ * @(#)Location.java
+ * Object stores a location
+ *
+ * @author Jim Ren
+ * @version 1.00 2012/5/9
+ */
+
+
+public class Location
+{
+	private int x;
+	private int y;
+	public final static int E = 0;
+	public final static int NE = 45;
+	public final static int N = 90;
+	public final static int NW = 135;
+	public final static int W = 180;
+	public final static int SW = 225;
+	public final static int S = 270;
+	public final static int SE = 315;	
+
+    public Location()
+   	{
+   		x = 0;
+   		y = 0;
+    }
+
+    public Location(int num1, int num2)
+   	{
+   		x = num1;
+   		y = num2;
+    }
+
+    public int getX()
+    {
+    	return x;
+    }
+
+    public int getY()
+    {
+    	return y;
+    }
+
+    public Location getAdjacentLocation(int direction)
+    {
+    	direction %= 360;
+    	int dirNum = (int)Math.round(direction / 45.0);
+    	switch(dirNum)
+    	{
+    		case 0 : return new Location(x, y+1);
+    		case 1 : return new Location(x-1, y+1);
+    		case 2 : return new Location(x-1, y);
+    		case 3 : return new Location(x-1, y-1);
+    		case 4 : return new Location(x, y-1);
+    		case 5 : return new Location(x+1, y-1);
+    		case 6 : return new Location(x+1, y);
+    		case 7 : return new Location(x+1, y+1);
+    		default: return null;
+    	}
+    }
+
+    public boolean equals(Location loc2)
+    {
+    	return this.getX()==loc2.getX() && this.getY()==loc2.getY();
+    }
+
+    public String toString()
+    {
+    	return "(" + x + "," + y + ")";
+    }
+    
+    public boolean inBounds()
+    {
+    	return !(getX()<0 || getX()>=19 || getY()<0 || getY()>=19);
+    }
+}
