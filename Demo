@@ -1,0 +1,47 @@
+import java.awt.*;
+import java.awt.event.*;
+import java.awt.Robot;
+import javax.swing.*;
+/**
+ * @(#)Board.java
+ * A Demo class that plays out a tutorial.
+ *
+ * @author Alexander Aitken
+ * @version 1.00 2012/5/9
+ */
+ 
+ 
+ public class Demo 
+ {
+ 	private int startx;
+ 	private int starty;
+ 	private Grid g;
+ 	private Robot rob;
+ 	private Piece[][] pieces;
+ 	private JPanel screen;
+ 	
+ 	public Demo(Grid gamegrid, JPanel s)
+ 	{
+ 		g = gamegrid;
+ 		rob = new Robot();
+ 		startx=0;
+ 		starty=0;
+ 		screen = s;
+ 	}
+ 	
+ 	public void playTutorial()
+ 	{
+ 		pieces = g.getPieces();
+
+		rob.mouseMove(screen.getX()+50, screen.getY()+50);
+		//HEY. CHECK YOUR DIMENSIONS. FIGURE THIS STUFF OUT, IT'S A LITTLE IMPORTANT. Assume grid starts 50/50 from top-left corner.
+		rob.mousePress(left);
+		rob.mouseRelease(left);
+		
+		rob.mouseMove(screen.getX()+100, screen.getY()+100);
+		rob.mousePress(left);
+		rob.mouseRelease(left); 		
+ 		
+ 	}
+ }
+ 
